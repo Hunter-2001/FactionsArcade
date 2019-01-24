@@ -1,0 +1,82 @@
+plugin_prefix: "&b&lFactionsArcade &7>"
+yeet2: 1
+
+messages:
+  testing: "Honestly idek bro wtf NO.1 #test#"
+  no_permission: "#prefix# You do not have permission to use that command!"
+  attention: "&b&m------------------------"
+  name_faction: "#prefix# You have &b30 &7seconds to type your faction name in the &bchat&7!"
+  name_faction_timeout: "#prefix# You didn't input your faction name in time!"
+  faction_already_exists: "#prefix# That faction name is already in use! Please try again."
+  generating_faction_island: "#prefix# Please wait while we &bgenerate &7your faction world!"
+  teleporting_to_world: "#prefix# You have been teleported to your faction world!"
+  given_schem_item: "#prefix# You now have a schematic wand! Left Click = POS1 | Right Click = POS2"
+  pos1_selected: "#prefix# Position 1 set - #posLoc#"
+  pos2_selected: "#prefix# Position 2 set - #posLoc#"
+  not_in_fac: "#prefix# You're not in a faction"
+  player_not_available: "#prefix# That player is not available!"
+  target_already_in_faction: "#prefix# That player is already in a faction!"
+  player_already_in_faction: "#prefix# You cannot join! You are already in a faction."
+  faction_invite: "#prefix# You have been invited to join &b#senderFaction#&7! Please type &b/f join #senderFaction# &7if you wish to join!"
+  faction_invite_help: "#prefix# &bNote&7: Factions are (cAsE sEnSiTiVe)"
+  player_invited: "#prefix# You have successfully invited #playerInvited# to your faction!"
+  not_invited_to_faction: "#prefix# You haven't been invited to that faction!"
+  faction_joined: "#prefix# You successfully joined &b#joinedFaction#&7!"
+  faction_name_not_alphanumeric: "#prefix# Your faction name can only include &bnumbers &7and &bletters&7!"
+  player_not_in_own_fac: "#prefix# That player is not in your faction!"
+  no_permission_promote: "#prefix# You cannot promote that player!"
+  player_promoted: "#prefix# You have successfully promoted &b#targetPlayer#&7!"
+  target_promoted: "#prefix# You have been promoted!"
+  no_permission_kick: "#prefix# You cannot kick that player!"
+  faction_leave: "#prefix# You have left your faction!"
+  faction_kick: "#prefix# Successfully kicked #kickedPlayer# from your faction!"
+  faction_kicked: "#prefix# You were kicked from your faction!"
+  player_left_faction: "#prefix# &b#playerLeaving# &7Has left your faction island!"
+  cannot_disband: "#prefix# You cannot disband your faction!"
+  disband_broadcast: "&b&l#disbandedFaction# &7has been disbanded!"
+  
+items:
+  create_faction_item:
+    item_name: "&7Create &b&lFaction Island&7!"
+    material: "COAL_ORE"
+  ftop_item:
+    item_name: "&7Check out the &bTop &7Factions!"
+    material: "GOLD_BLOCK"
+  warps_item:
+    item_name: "&7Open a list of &bWarps&7!"
+    material: "STICK"
+  schem_item:
+    item_name: "&7Select a &bCuboid &7area!"
+    material: "BLAZE_ROD"
+    
+#-------------
+#Menus
+#-------------
+
+factionmenu:
+  menusize: 9
+  menun: "&7-==&bFaction Menu&7==-"
+  items:
+    player_data:
+      name: "&dPerks"
+      slot: 0
+      material: COAL_ORE
+      lore:
+      - "&1test"
+    close_menu:
+      name: "test2"
+      slot: 4
+      material: COAL_ORE
+      lore:
+      - "&2test"
+    faction_data:
+      name: "test3"
+      slot: 8
+      material: COAL_ORE
+      lore:
+      - "&3test"
+
+#-------------
+#Permissions
+#-------------
+#fa.schem.item

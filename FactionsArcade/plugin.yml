@@ -1,0 +1,7 @@
+name: FactionsArcade
+version: 1.0
+main: com.ascendpvp.factionsarcade.FactionsArcadeMain
+author: Str8
+
+commands:
+ f:
