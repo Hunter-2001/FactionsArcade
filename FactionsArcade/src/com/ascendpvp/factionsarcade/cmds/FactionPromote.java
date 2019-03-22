@@ -21,32 +21,36 @@ public class FactionPromote implements CommandExecutor {
 			
 			Player p = (Player) sender;
 			UUID pid = p.getUniqueId();
+			//Checks to see if player even has faction
 			if(!plugin.playerData.contains(pid.toString())) {
 				p.sendMessage(plugin.chatMessages.get("not_in_fac"));
 				return false;
 			}
-			//Check to see if player even has faction
 			if(plugin.playerData.getString(pid.toString() + ".faction").equals("none")) {
 				p.sendMessage(plugin.chatMessages.get("not_in_fac"));
 				return false;
 			}
 			String pfac = plugin.playerData.getString(pid.toString() + ".faction");
+			//If target is null
 			if(Bukkit.getPlayer(args[1]) == null) {
 				p.sendMessage(plugin.chatMessages.get("player_not_available"));
 				return false;
 			}
 			Player targetp = Bukkit.getPlayer(args[1]);
 			UUID targetid = Bukkit.getPlayer(args[1]).getUniqueId();
+			//If command executor tries to kick someone outside of their own faction
 			if(!plugin.playerData.getString(targetid.toString() + ".faction").equalsIgnoreCase(pfac)) {
 				p.sendMessage(plugin.chatMessages.get("player_not_in_own_fac"));;
 				return false;
 			}
+			//If command executor tries to promote themself
 			if(p == targetp) {
 				p.sendMessage(plugin.chatMessages.get("no_permission_promote"));
 				return false;
 			}
 			int targetRank = plugin.playerData.getInt(targetid.toString() + ".factionrank");
 			int playerRank = plugin.playerData.getInt(pid.toString() + ".factionrank");
+
 			if(!(playerRank >= 3)) {
 				p.sendMessage(plugin.chatMessages.get("no_permission_promote"));
 				return false;

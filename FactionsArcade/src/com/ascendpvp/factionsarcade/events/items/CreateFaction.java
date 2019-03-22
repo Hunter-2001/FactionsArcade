@@ -1,12 +1,14 @@
 package com.ascendpvp.factionsarcade.events.items;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.WorldCreator;
-import org.bukkit.WorldType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -81,17 +83,25 @@ public class CreateFaction implements Listener {
 		p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 400, 5));
 		p.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 400, 5));
 		//Create empty world
-		WorldCreator wc = new WorldCreator(factionName);
-		wc.type(WorldType.FLAT);
-		wc.generatorSettings("2;0;1;");
-		wc.createWorld();
+		File srcDir = new File("D:/FactionsArcade/BaseIsland");
+		File destDir = new File("D:/FactionsArcade/" + factionName);
+		try {
+			FileUtils.copyDirectory(srcDir, destDir);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 		
+		//Load world
 		new BukkitRunnable() {
 			public void run() {
-				plugin.help.printSchem("skiddo123", Bukkit.getWorld(factionName));
+				File uidFile = new File("D:/FactionsArcade/" + factionName + "/uid.dat");
+				uidFile.delete();
+				WorldCreator wc = new WorldCreator(factionName);
+				wc.createWorld();
 			}
-		}.runTaskLater(plugin, 20*20); //Wait 20 seconds
+		}.runTaskLater(plugin, 20*10); //Wait 10 seconds
 
+		//Teleport player
 		new BukkitRunnable() {
 			public void run() {
 				p.teleport(new Location(Bukkit.getWorld(factionName), 0.5, 100, 0.5));
@@ -99,6 +109,5 @@ public class CreateFaction implements Listener {
 				p.sendMessage(plugin.chatMessages.get("teleporting_to_world").replace("#factionInput#", factionName));
 			}
 		}.runTaskLater(plugin, 20*15); //Wait 15 seconds
-
 	}
 }

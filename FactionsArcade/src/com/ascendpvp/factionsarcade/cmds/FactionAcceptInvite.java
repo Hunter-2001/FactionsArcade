@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.ascendpvp.factionsarcade.FactionsArcadeMain;
 
+//Class to allow command executor to accept a faction invite
 public class FactionAcceptInvite implements CommandExecutor {
 	
 	FactionsArcadeMain plugin;
@@ -37,16 +38,20 @@ public class FactionAcceptInvite implements CommandExecutor {
 			p.sendMessage(plugin.chatMessages.get("not_invited_to_faction"));
 			return false;
 		}
+		//If player tries to accept an invite to a faction they were not invited to
 		String facName = args[1];
 		if(!plugin.playersInvited.get(p.getName()).contains(facName)) {
 			p.sendMessage(plugin.chatMessages.get("not_invited_to_faction"));
 			return false;
 		}
 		
+		//Remove player from invite list
 		plugin.playersInvited.remove(p.getName());
+		//Teleport player, clear inventory
 		p.sendMessage(plugin.chatMessages.get("faction_joined").replace("#joinedFaction#", facName));
 		p.teleport(new Location(Bukkit.getWorld(facName), 0.5, 100, 0.5));
 		p.getInventory().clear();
+		//Set player faction data to the desired faction name
 		plugin.playerData.set(pid.toString() + ".faction", facName);
 		plugin.help.savePlayerData();
 		

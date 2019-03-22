@@ -40,11 +40,9 @@ public class FactionMenu implements CommandExecutor {
 		return false;
 	}
 
-
-
 	/*
 	 * ----------------
-	 * Load menu
+	 * Load Faction menu
 	 * ----------------
 	 */
 	public Inventory loadFactionMenu() {

@@ -18,6 +18,7 @@ public class Schem implements Listener {
 	@EventHandler
 	public void onSchemClick(PlayerInteractEvent e) {
 		Player p = e.getPlayer();
+		//Null checks ++ checks to ensure player is holding schem_item
 		if(p.getItemInHand() == null || p.getItemInHand().getItemMeta() == null) return;
 		if(p.getItemInHand().getItemMeta().getDisplayName() == null) return;
 		if(!e.getItem().equals(plugin.items.get("schem_item"))) return;

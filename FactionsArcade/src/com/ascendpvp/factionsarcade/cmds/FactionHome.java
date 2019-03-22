@@ -11,10 +11,10 @@ import org.bukkit.entity.Player;
 
 import com.ascendpvp.factionsarcade.FactionsArcadeMain;
 
-public class FactionLeave implements CommandExecutor {
+public class FactionHome implements CommandExecutor {
 
 	FactionsArcadeMain plugin;
-	public FactionLeave(FactionsArcadeMain plugin) {
+	public FactionHome(FactionsArcadeMain plugin) {
 		this.plugin = plugin;
 	}
 	
@@ -32,23 +32,26 @@ public class FactionLeave implements CommandExecutor {
 			p.sendMessage(plugin.chatMessages.get("not_in_fac"));
 			return false;
 		}
-		//Check to see if player owns the faction
-		if(plugin.playerData.getInt(pid.toString() + ".factionrank") == 4) {
-			p.sendMessage(plugin.chatMessages.get("leader_cannot_leave"));
-		}
+		String pFaction = plugin.playerData.getString(pid.toString() + ".faction");
+		/*
+		 * 
+		 * ADD CHARGE TIME!
+		 * 
+		 */
 		
-		//Broadcast the faction leave to all members of the faction world
-		for(Player worldPlayer : Bukkit.getWorld(plugin.playerData.getString(pid.toString() + ".faction")).getPlayers()) {
-			worldPlayer.sendMessage(plugin.chatMessages.get("player_left_faction").replace("#playerLeaving#", p.getName()));
+		//If player doesn't have a faction home
+		if(plugin.factionData.getString(pFaction + ".home") == null) {
+		p.sendMessage(plugin.chatMessages.get("faction_home"));
+		p.teleport(new Location(Bukkit.getWorld(plugin.playerData.getString(pid.toString() + ".faction")), 0.5, 100, 0.5));
+		//If they do
+		} else {
+			p.sendMessage(plugin.chatMessages.get("faction_home"));
+			String[] parts = plugin.factionData.getString(pFaction + ".home").split(" ");
+			String x = parts[0];
+			String y = parts[1];
+			String z = parts[2];
+			p.teleport(new Location(Bukkit.getWorld(plugin.playerData.getString(pid.toString() + ".faction")), Double.parseDouble(x), Double.parseDouble(y), Double.parseDouble(z)));
 		}
-		
-		p.sendMessage(plugin.chatMessages.get("faction_leave"));
-		p.teleport(new Location(Bukkit.getWorld("world"), 0.5, 100, 0.5));
-		p.getInventory().clear();
-		plugin.invHelp.starterInv(p);
-		plugin.playerData.set(pid.toString() + ".faction", "none");
-		plugin.playerData.set(pid.toString() + ".factionrank", 1);
-		plugin.help.savePlayerData();
 		
 		return false;
 	}

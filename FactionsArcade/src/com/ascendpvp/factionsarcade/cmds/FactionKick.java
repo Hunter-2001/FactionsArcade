@@ -22,36 +22,41 @@ public class FactionKick implements CommandExecutor {
 		
 		Player p = (Player) sender;
 		UUID pid = p.getUniqueId();
+		//Checks to see if command executor even has faction
 		if(!plugin.playerData.contains(pid.toString())) {
 			p.sendMessage(plugin.chatMessages.get("not_in_fac"));
 			return false;
 		}
-		//Check to see if player even has faction
 		if(plugin.playerData.getString(pid.toString() + ".faction").equals("none")) {
 			p.sendMessage(plugin.chatMessages.get("not_in_fac"));
 			return false;
 		}
 		String pfac = plugin.playerData.getString(pid.toString() + ".faction");
+		//If target is null
 		if(Bukkit.getPlayer(args[1]) == null) {
 			p.sendMessage(plugin.chatMessages.get("player_not_available"));
 			return false;
 		}
 		Player targetp = Bukkit.getPlayer(args[1]);
 		UUID targetid = Bukkit.getPlayer(args[1]).getUniqueId();
+		//If command executor tries to kick someone outside of their own faction
 		if(!plugin.playerData.getString(targetid.toString() + ".faction").equalsIgnoreCase(pfac)) {
 			p.sendMessage(plugin.chatMessages.get("player_not_in_own_fac"));;
 			return false;
 		}
+		//If player tries to kick themselves
 		if(p == targetp) {
 			p.sendMessage(plugin.chatMessages.get("no_permission_kick"));
 			return false;
 		}
 		int targetRank = plugin.playerData.getInt(targetid.toString() + ".factionrank");
 		int playerRank = plugin.playerData.getInt(pid.toString() + ".factionrank");
+		//If command executors rank is not 2 or above
 		if(!(playerRank >= 2)) {
 			p.sendMessage(plugin.chatMessages.get("no_permission_kick"));
 			return false;
 		}
+		//If command executors rank is not higher than the target
 		if(!(playerRank > targetRank)) {
 			p.sendMessage(plugin.chatMessages.get("no_permission_kick"));
 			return false;
@@ -65,6 +70,10 @@ public class FactionKick implements CommandExecutor {
 		plugin.playerData.set(targetid.toString() + ".faction", "none");
 		plugin.playerData.set(targetid.toString() + ".factionrank", 1);
 		plugin.help.savePlayerData();
+		/*
+		 * Maybe add a broadcast throughout the faction?
+		 * (Through the use of a helper)
+		 */
 		
 		return false;
 	}

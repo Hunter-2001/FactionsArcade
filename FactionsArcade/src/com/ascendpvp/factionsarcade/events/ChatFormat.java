@@ -13,6 +13,7 @@ public class ChatFormat implements Listener {
 		this.plugin = plugin;
 	}
 	
+	//Event to format chat to display faction name (and soon to be rank) as a prefix
 	@EventHandler
 	public void onChat(AsyncPlayerChatEvent e) {
 		
